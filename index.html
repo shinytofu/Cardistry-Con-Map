@@ -4,50 +4,63 @@
   <meta charset="utf-8">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/3.2.0/sanitize.min.css" />
   <style>
+    .cf:before,
+    .cf:after {
+      content: " ";
+      display: table;
+    }
+    .cf:after {
+      clear: both;
+    }
+    .cf {
+      *zoom: 1;
+    }
+    #app {
+      overflow: hidden;
+      position: absolute;
+      top: 50px;
+      bottom: 50px;
+      left: 50px;
+      right: 50px;
+      background: #fff;
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    }
     #map {
-      width: 100%;
-      height: 50%;
+      float: left;
+      width: 50%;
+      height: 100%;
+    }
+    #list {
+      overflow-y: scroll;
+      float: left;
+      width: 50%;
+      height: 100%;
+    }
+    @media (max-width : 730px) {
+      #map {
+        float: none;
+        width: 100%;
+        height: 50%;
+      }
+      #list {
+        float: none;
+        display: block;
+        overflow-y: scroll;
+        width: 100%;
+        height: 50%;
+      }
     }
   </style>
 </head>
-<body>
-  <div id="map"></div>
-  <list></list>
+<body class="cf">
+  <div id="app">
+    <div id="map"></div>
+    <list id="list"></list>
+  </div>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCM0wskBllIQBKVSJ5-W-5WNn7914wuRE" async defer></script>
+  <script src="./lodash.min.js"></script>
   <script src="./riot.min.js"></script>
   <script src="./list.js"></script>
-  <script type="text/javascript">
-    window.onload = function() {
-      var mapStyle = [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}];
-      var map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: 45, lng: -30 },
-        zoom: 3,
-        maxZoom: 10,
-        panControl: false,
-        streetViewControl: false,
-        styles: mapStyle,
-        mapTypeControlOptions: {
-          mapTypeIds: []
-        }
-      });
-      riot.mount('list', {
-        map: map,
-        people: [
-          {
-            name: 'Ladislas Toubart',
-            location: 'Belgium',
-            lat: 50.503887,
-            lng: 4.469936
-          },
-          {
-            name: 'Zach Mueller',
-            location: 'California, USA',
-            lat: 36.77826,
-            lng: -119.4179324
-          }
-        ],
-      });
-    }
-  </script>
+  <script src="./main.js"></script>
 </body>
 </html>
