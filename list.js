@@ -71,10 +71,13 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
       })
       .map(function(marker) {
         return marker.people;
-      })
-      .reduce(function(a, b){
-        return a.concat(b);
       });
+
+      if (self.visiblePeople.length) {
+        self.visiblePeople = self.visiblePeople.reduce(function(a, b){
+          return a.concat(b);
+        });
+      }
 
       self.visiblePeople = _.chain(self.visiblePeople)
       .sortBy('name')
