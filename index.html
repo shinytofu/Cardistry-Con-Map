@@ -5,175 +5,48 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/3.2.0/sanitize.min.css" />
   <style>
     #map {
-      margin: 0 auto;
-      width: 1100px;
-      height: 500px;
+      width: 100%;
+      height: 50%;
     }
   </style>
 </head>
 <body>
   <div id="map"></div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCM0wskBllIQBKVSJ5-W-5WNn7914wuRE&callback=initMap" async defer></script>
-  <script>
+  <list></list>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCCM0wskBllIQBKVSJ5-W-5WNn7914wuRE" async defer></script>
+  <script src="./riot.min.js"></script>
+  <script src="./list.js"></script>
+  <script type="text/javascript">
     window.onload = function() {
-      var people = [
-        {
-          name: 'Ladislas Toubart',
-          location: 'Belgium'
-        },
-        {
-          name: 'Zach Mueller',
-          location: 'California, USA'
-        },
-        {
-          name: 'Franco Pascali',
-          location: 'California, USA'
-        },
-        {
-          name: 'Michael Stern',
-          location: 'California, USA'
-        },
-        {
-          name: 'Dan Buck',
-          location: 'California, USA'
-        },
-        {
-          name: 'Dave Buck',
-          location: 'California, USA'
-        },
-        {
-          name: 'Tobias Levin',
-          location: 'Denmark'
-        },
-        {
-          name: 'Oliver Sogard',
-          location: 'Denmark'
-        },
-        {
-          name: 'Nikolaj Pedersen',
-          location: 'Denmark'
-        },
-        {
-          name: 'David Pedersen',
-          location: 'Denmark'
-        },
-        {
-          name: 'Dennis Jin',
-          location: 'Sweden'
-        },
-        {
-          name: 'Dimitri Arleri',
-          location: 'France'
-        },
-        {
-          name: 'Antoine Thomas',
-          location: 'France'
-        },
-        {
-          name: 'Franky Morales',
-          location: 'Illinois, USA'
-        },
-        {
-          name: 'Shivraj Morzaria',
-          location: 'India'
-        },
-        {
-          name: 'Aviv Moraly',
-          location: 'Israel'
-        },
-        {
-          name: 'Bas John',
-          location: 'Netherlands'
-        },
-        {
-          name: 'Adam Kerchman',
-          location: 'New York, USA'
-        },
-        {
-          name: 'Chris Hestnes',
-          location: 'Norway'
-        },
-        {
-          name: 'Henrik Forberg',
-          location: 'Norway'
-        },
-        {
-          name: 'Chase Duncan',
-          location: 'Oregon, USA'
-        },
-        {
-          name: 'Andrew Avila',
-          location: 'Oregon, USA'
-        },
-        {
-          name: 'Kevin Ho',
-          location: 'Singapore'
-        },
-        {
-          name: 'Huron Low',
-          location: 'Singapore'
-        },
-        {
-          name: 'Daren Yeow',
-          location: 'Singapore'
-        },
-        {
-          name: 'Joshua Tan',
-          location: 'Singapore'
-        },
-        {
-          name: 'Jeremy Tan',
-          location: 'Singapore'
-        },
-        {
-          name: 'Jaspas Deck',
-          location: 'Singapore'
-        },
-        {
-          name: 'Jeongseon	South',
-          location: 'Korea'
-        },
-        {
-          name: 'Alejandro Portela',
-          location: 'Spain'
-        },
-        {
-          name: 'Noel Heath',
-          location: 'Sweden'
-        },
-        {
-          name: 'Brendan Conner',
-          location: 'Vancouver, Canada'
-        },
-        {
-          name: 'Duy Nguyen',
-          location: 'Vietnam'
-        },
-        {
-          name: 'Spencer Clark',
-          location: 'Washington, USA'
-        },
-        {
-          name: 'Chris Severson',
-          location: 'Wisconsin, USA'
-        }
-      ];
-      var map;
       var mapStyle = [{"featureType":"landscape","stylers":[{"hue":"#FFBB00"},{"saturation":43.400000000000006},{"lightness":37.599999999999994},{"gamma":1}]},{"featureType":"road.highway","stylers":[{"hue":"#FFC200"},{"saturation":-61.8},{"lightness":45.599999999999994},{"gamma":1}]},{"featureType":"road.arterial","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":51.19999999999999},{"gamma":1}]},{"featureType":"road.local","stylers":[{"hue":"#FF0300"},{"saturation":-100},{"lightness":52},{"gamma":1}]},{"featureType":"water","stylers":[{"hue":"#0078FF"},{"saturation":-13.200000000000003},{"lightness":2.4000000000000057},{"gamma":1}]},{"featureType":"poi","stylers":[{"hue":"#00FF6A"},{"saturation":-1.0989010989011234},{"lightness":11.200000000000017},{"gamma":1}]}];
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: { lat: 0, lng: 0 },
-          zoom: 3,
-          maxZoom: 10,
-          panControl: false,
-          streetViewControl: false,
-          styles: mapStyle,
-          mapTypeControlOptions: {
-            mapTypeIds: []
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 45, lng: -30 },
+        zoom: 3,
+        maxZoom: 10,
+        panControl: false,
+        streetViewControl: false,
+        styles: mapStyle,
+        mapTypeControlOptions: {
+          mapTypeIds: []
+        }
+      });
+      riot.mount('list', {
+        map: map,
+        people: [
+          {
+            name: 'Ladislas Toubart',
+            location: 'Belgium',
+            lat: 50.503887,
+            lng: 4.469936
+          },
+          {
+            name: 'Zach Mueller',
+            location: 'California, USA',
+            lat: 36.77826,
+            lng: -119.4179324
           }
-        });
-      }
-      initMap();
+        ],
+      });
     }
   </script>
 </body>
