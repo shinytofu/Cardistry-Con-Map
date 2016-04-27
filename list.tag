@@ -100,8 +100,7 @@
         markers.push(marker);
       }
     }
-
-    props.map.addListener('center_changed', function() {
+    var refresh = function() {
       self.visiblePeople = markers.filter(function(marker) {
         return props.map.getBounds().contains(marker.getPosition());
       })
@@ -122,7 +121,9 @@
       })
       .value();
       self.update();
-    });
+    };
+    refresh = _.debounce(refresh, 100);
+    props.map.addListener('center_changed', refresh);
 
     google.maps.event.addListenerOnce(props.map, 'tilesloaded', function() {
       google.maps.event.trigger(props.map, 'center_changed');
