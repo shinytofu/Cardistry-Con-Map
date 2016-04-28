@@ -5,20 +5,28 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
 
     self.visiblePeople = [];
     self.focusPeople = [];
-
+    var shadowImage = new google.maps.MarkerImage(
+      'http://maps.gstatic.com/mapfiles/shadow50.png', null, null,
+      new google.maps.Point(10, 34)
+    );
     var markerSVG = {
       path: 'M78.5,34.2C78.5,56.3,50,94.3,50,94.3S21.5,56.5,21.5,34.2C21.5,18.4,34.2,5.7,50,5.7S78.5,18.4,78.5,34.2z',
       scale: 0.4,
-      fillColor: '#ffdc1a',
+      fillColor: '#424240',
       fillOpacity: 1,
+      strokeWeight: 2,
+      strokeColor: 'transparent',
       anchor: new google.maps.Point(58, 90),
-      labelOrigin: new google.maps.Point(48, 40)
+      labelOrigin: new google.maps.Point(48, 40),
+      shadow: shadowImage
     }
     var markerSVGSelected = {
       path: 'M78.5,34.2C78.5,56.3,50,94.3,50,94.3S21.5,56.5,21.5,34.2C21.5,18.4,34.2,5.7,50,5.7S78.5,18.4,78.5,34.2z',
-      scale: 0.4,
-      fillColor: '#f8f1cc',
+      scale: 0.5,
+      fillColor: '#6c6c6c',
       fillOpacity: 1,
+      strokeWeight: 0,
+      strokeColor: '#413700',
       anchor: new google.maps.Point(58, 90),
       labelOrigin: new google.maps.Point(48, 40)
     }
@@ -31,7 +39,7 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
           lng: props.people[i].lng
         },
         label: {
-          color: '#413700',
+          color: '#e5dec6',
           fontSize: '13',
           fontWeight: '900',
           fontFamily: 'Arial',
@@ -51,7 +59,7 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
         });
         duplicateMarker.setLabel({
           text: Number(duplicateMarker.people.length).toString() || "0",
-          color: '#413700',
+          color: '#e5dec6',
           fontSize: '13',
           fontWeight: '900',
           fontFamily: 'Arial'
@@ -90,6 +98,14 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
     props.map.addListener('center_changed', refresh);
 
     google.maps.event.addListenerOnce(props.map, 'tilesloaded', function() {
+      google.maps.event.trigger(props.map, 'center_changed');
+    });
+
+    google.maps.event.addListener(props.map, 'click', function() {
+      console.log('lol');
+      self.focusMarker.setIcon(markerSVG);
+      self.focusMarker = null;
+      self.focusPeople = [];
       google.maps.event.trigger(props.map, 'center_changed');
     });
 
