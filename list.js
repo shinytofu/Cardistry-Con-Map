@@ -143,7 +143,7 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
         self.focusMarker = marker;
         google.maps.event.trigger(props.map, 'center_changed');
         if (marker.people.length === 1) {
-          document.getElementById(marker.people[0].hash).scrollIntoView({block: 'end', behavior: 'smooth'});
+          document.getElementById(marker.people[0].hash).scrollIntoView(false);
         }
         props.map.panTo(marker.getPosition());
       }
