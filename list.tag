@@ -156,13 +156,10 @@
       self.visiblePeople = _.chain(self.visiblePeople)
       .sortBy('name')
       .sortBy(function(person) {
-        return person;
         return _.map(self.focusPeople, 'name').indexOf(person.name) > -1 ? '0' : '1';
       })
       .value();
       self.update();
-      console.log(self.visiblePeople);
-
     };
     refresh = _.debounce(refresh, 100);
     props.map.addListener('center_changed', refresh);
@@ -184,7 +181,6 @@
       const matchingMarker = _.find(markers, function(marker) {
         return _.find(marker.people, person);
       });
-      console.log(matchingMarker);
       this.focus(matchingMarker);
     }
 
@@ -202,9 +198,10 @@
         self.focusPeople = marker.people;
         self.focusMarker = marker;
         google.maps.event.trigger(props.map, 'center_changed');
+        /*
         if (marker.people.length === 1) {
           document.getElementById(marker.people[0].hash).scrollIntoView(false);
-        }
+        }*/
         props.map.panTo(marker.getPosition());
       }
     }
