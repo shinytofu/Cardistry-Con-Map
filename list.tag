@@ -26,17 +26,19 @@
       border-bottom: 1px solid #ccc;
     }
     .person.focus {
+      color: #357cfe;
+      /*
       color: #fff;
       background: #357cfe;
       border-bottom: 1px solid #357cfe;
-      box-shadow: 0 -1px 0 #357cfe;
+      box-shadow: 0 -1px 0 #357cfe; */
     }
     .person:not(.focus):hover {
       cursor: pointer;
       background: #f5f5f5;
     }
     .person.focus .person-location {
-      color: #fff;
+      color: #7c9ad0;
     }
     .person-location {
       color: #999;
@@ -155,10 +157,17 @@
 
       self.visiblePeople = _.chain(self.visiblePeople)
       .sortBy('name')
+      .filter(function(person) {
+        if (self.focusPeople.length === 0) {
+          return person;
+        }
+        return _.map(self.focusPeople, 'name').indexOf(person.name) > -1;
+      })
       .sortBy(function(person) {
         return _.map(self.focusPeople, 'name').indexOf(person.name) > -1 ? '0' : '1';
       })
       .value();
+      console.log(self.visiblePeople);
       self.update();
     };
     refresh = _.debounce(refresh, 100);
