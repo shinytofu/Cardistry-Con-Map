@@ -121,7 +121,7 @@ riot.tag2('list', '<div id="people"> <div class="{cf: true,         person: true
     });
 
     this.focusFromName = function(person) {
-      const matchingMarker = _.find(markers, (marker) => {
+      const matchingMarker = _.find(markers, function(marker) {
         return _.find(marker.people, person);
       });
       console.log(matchingMarker);

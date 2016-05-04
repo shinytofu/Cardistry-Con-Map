@@ -20,7 +20,7 @@ window.onload = function() {
   request.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       var data = JSON.parse(request.responseText);
-      data = _.map(data.feed.entry, (entry) => {
+      data = _.map(data.feed.entry, function(entry) {
         var metaData = {
           name: _.get(entry, 'gsx$name.$t'),
           location: _.get(entry, 'gsx$location.$t'),

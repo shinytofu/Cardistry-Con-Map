@@ -181,7 +181,7 @@
     });
 
     focusFromName(person) {
-      const matchingMarker = _.find(markers, (marker) => {
+      const matchingMarker = _.find(markers, function(marker) {
         return _.find(marker.people, person);
       });
       console.log(matchingMarker);
