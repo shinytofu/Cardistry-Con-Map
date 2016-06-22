@@ -21,12 +21,14 @@ window.onload = function() {
     if (request.status >= 200 && request.status < 400) {
       var data = JSON.parse(request.responseText);
       data = _.map(data.feed.entry, function(entry) {
+        var countryCode = _.get(entry, 'gsx$countrycode.$t');
         var metaData = {
           name: _.get(entry, 'gsx$name.$t'),
           location: _.get(entry, 'gsx$location.$t'),
           lat: parseFloat(_.get(entry, 'gsx$lat.$t')),
           lng: parseFloat(_.get(entry, 'gsx$lng.$t')),
-          countryCode: _.get(entry, 'gsx$countrycode.$t')
+          countryCode: countryCode,
+          flagUrl: countryCode === 'catalonia' ? 'http://i.imgur.com/DUpGoKm.png' : 'https://lipis.github.io/flag-icon-css/flags/4x3/' + countryCode + '.svg' 
         };
         return metaData;
       });

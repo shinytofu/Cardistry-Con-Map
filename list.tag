@@ -11,7 +11,7 @@
       onclick={ focusFromName.bind(null, v) }
     >
       <div class="person-location">
-        From { v.location } <div class="person-flag" style="background-image: url(https://lipis.github.io/flag-icon-css/flags/4x3/{ v.countryCode }.svg)"></div>
+        From { v.location } <div class="person-flag" style="background-image: url({ v.flagUrl })"></div>
       </div>
       <div class="person-name">{ v.name }</div>
     </div>
@@ -97,19 +97,19 @@
       labelOrigin: new google.maps.Point(48, 40)
     }
 
+    function selectedMarker(number) {
+      return 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue' + number + '.png';
+    }
+    function unselectedMarker(number) {
+      return 'https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red' + number + '.png';
+    }
+
     for (var i = 0; i < props.people.length; i++) {
       var marker = new google.maps.Marker({
-        icon: markerSVG,
+        icon: unselectedMarker(1),
         position: {
           lat: props.people[i].lat,
           lng: props.people[i].lng
-        },
-        label: {
-          color: '#fff',
-          fontSize: '13',
-          fontWeight: '900',
-          fontFamily: 'Arial',
-          text: '1'
         },
         people: [props.people[i]]
       });
@@ -123,13 +123,7 @@
         duplicateMarker.setOptions({
           people: duplicateMarker.people.concat(props.people[i])
         });
-        duplicateMarker.setLabel({
-          text: Number(duplicateMarker.people.length).toString() || "0",
-          color: '#fff',
-          fontSize: '13',
-          fontWeight: '900',
-          fontFamily: 'Arial'
-        });
+        duplicateMarker.setIcon(unselectedMarker(duplicateMarker.people.length));
       } else {
         marker.addListener('click', function(e) {
           self.focus(this);
@@ -167,7 +161,6 @@
         return _.map(self.focusPeople, 'name').indexOf(person.name) > -1 ? '0' : '1';
       })
       .value();
-      console.log(self.visiblePeople);
       self.update();
     };
     refresh = _.debounce(refresh, 100);
@@ -179,7 +172,7 @@
 
     google.maps.event.addListener(props.map, 'click', function() {
       if (self.focusMarker) {
-        self.focusMarker.setIcon(markerSVG);
+        self.focusMarker.setIcon(unselectedMarker(self.focusMarker.people.length));
         self.focusMarker = null;
         self.focusPeople = [];
       }
@@ -195,15 +188,15 @@
 
     focus(marker) {
       if (_.isEqual(marker, self.focusMarker)) {
-        marker.setIcon(markerSVG);
+        marker.setIcon(unselectedMarker(marker.people.length));
         self.focusMarker = null;
         self.focusPeople = [];
         google.maps.event.trigger(props.map, 'center_changed');
       } else {
         if (self.focusMarker) {
-          self.focusMarker.setIcon(markerSVG);
+          self.focusMarker.setIcon(unselectedMarker(self.focusMarker.people.length));
         }
-        marker.setIcon(markerSVGSelected);
+        marker.setIcon(selectedMarker(marker.people.length));
         self.focusPeople = marker.people;
         self.focusMarker = marker;
         google.maps.event.trigger(props.map, 'center_changed');
