@@ -18,12 +18,18 @@
     #app {
       overflow: hidden;
       position: absolute;
-      top: 50px;
       bottom: 50px;
+      top: 50px;
       left: 50px;
       right: 50px;
       background: #fff;
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.15);
+    }
+    #app-desc {
+      margin: 0 auto;
+      padding-bottom: 50px;
+      max-width: 500px;
+      font-size: 13px;
+      line-height: 1.2;
     }
     #map {
       float: left;
@@ -54,6 +60,15 @@
 </head>
 <body class="cf">
   <div id="app">
+    <div id="app-desc">
+      Welcome to the Official Map of Cardistry-Con! Here you will find a list of all the cardists attending this year's conference, as well as the countries they are from.
+      <br />
+      <br />
+      To navigate the map, zoom in or out accordingly, and the list will display all the cardists in that region. Clicking on a cardist's name will show you all the people from that same country, as will clicking on any of the pins on the map.
+      <br />
+      <br />
+      (NOTE: Pinned locations are not accurate to the city of each cardists' origin; they are just placed to give a rough sense of the general region the cardists are from.)
+    </div>
     <div id="map"></div>
     <list id="list"></list>
   </div>
